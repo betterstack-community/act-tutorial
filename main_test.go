@@ -8,9 +8,9 @@ import (
 
 func TestCountWords(t *testing.T) {
 	tests := []struct {
+		want  map[string]int
 		name  string
 		input string
-		want  map[string]int
 	}{
 		{
 			name:  "basic counting",
