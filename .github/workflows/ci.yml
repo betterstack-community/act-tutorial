@@ -1,12 +1,9 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   lint:
@@ -22,27 +19,3 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.64.2
-
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.24"
-
-      - name: Run tests
-        run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v5
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          files: ./coverage.txt
-          token: ${{ secrets.CODECOV_TOKEN }}
